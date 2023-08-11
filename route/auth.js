@@ -14,7 +14,6 @@ router.post("/signin", async (req, res) => {
       return res.status(422).json({ msg: "pls fill email and password" });
     }
 
-
     const userExist = await User.findOne({ email: email });
     if (userExist) {
       const passMatch = await bcrypt.compare(password, userExist.password);
@@ -34,35 +33,29 @@ router.post("/signin", async (req, res) => {
 });
 
 // --------------User SignUp Route-----------------------
-router.post("/signup", (req, res) => {
-  const { name, email, phone, work, password, cpassword } = req.body;
-  // do register this user in database
-  if (!name || !email || !phone || !work || !password || !cpassword) {
-    return res.status(422).json({ msg: "pls fill all data" });
-  }
+router.post("/signup", async(req, res) => {
+  try {
+    const { name, email, phone, work, password, cpassword } = req.body;
+    // do register this user in database
+    if (!name || !email || !phone || !work || !password || !cpassword) {
+      return res.status(422).json({ msg: "pls fill all data" });
+    }
 
-  //if user already exist then find in database that the person already exist or not ?
-  User.findOne({ email: email })
-    .then((existUser) => {
-      if (existUser) {
-        return res.status(422).json({ msg: "user already exist" });
-      } else if (password != cpassword) {
-        return res.status(422).json({ msg: "pass is not matching" });
-      }
-
+    const existUser =await User.findOne({ email: email });
+    if (existUser) {
+      return res.status(422).json({ msg: "user already exist" });
+    } 
+    else if (password != cpassword) {
+      return res.status(422).json({ msg: "pass is not matching" });
+    } 
+    else {
       const user = new User({ name, email, phone, work, password, cpassword });
-      user
-        .save()
-        .then(() => {
-          res.status(201).json({ msg: "user signup sucessfull" });
-        })
-        .catch((err) => {
-          res.status(201).json({ msg: "user failed to register" });
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      user.save();
+      return res.status(201).json({ msg: "user signup sucessfull" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

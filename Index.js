@@ -12,14 +12,8 @@ const port=process.env.PORT
 
 app.use(require('./route/auth'))
 
-// MIddleware
-// const  middleware=(req,res,next)=>{
-//   console.log("hey Middleware!");
-//   next();
 
-// }
-// middleware()
-// app.use(express.json())
+
 
 
 
