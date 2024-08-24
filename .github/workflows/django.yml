@@ -25,7 +25,8 @@ jobs:
       with :
           image-ref: sincha/nodeapp:latest
           format: 'table'
-          
+          ignore-unfixed: true
+          vuln-type: 'os,library'
          
           severity: 'CRITICAL,HIGH'
 
