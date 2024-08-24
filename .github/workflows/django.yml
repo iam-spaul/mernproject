@@ -26,7 +26,7 @@ jobs:
           image-ref: sincha/nodeapp:latest
           format: 'table'
           
-          output: 'index.html'
+         
           severity: 'CRITICAL,HIGH'
 
  
