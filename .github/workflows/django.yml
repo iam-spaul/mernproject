@@ -21,7 +21,8 @@ jobs:
     - name: image scan using trivy
       uses: aquasecurity/trivy-action@0.20.0
       with:
-          image-ref: sincha/todo:latest
+          image-ref: sincha/nodeapp:latest
+
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
