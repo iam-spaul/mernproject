@@ -14,10 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name : pull image from registry
+      run : |
+        docker pull sincha/nodeapp:latest
+
     - name: image scan using trivy
       uses: aquasecurity/trivy-action@0.20.0
       with:
-          image-ref: nginx
+          image-ref: sincha/nodeapp:latest
           format: 'table'
           output: 'trivyRes.html'
           exit-code: '0'
