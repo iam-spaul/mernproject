@@ -14,15 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: image pull from docker registry
-      run: |
-          docker pull sincha/todo:latest
     - name: image scan using trivy
       uses: aquasecurity/trivy-action@0.20.0
       with:
-          
+          image-ref: nginx
           format: 'table'
+      
           exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
