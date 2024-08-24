@@ -19,7 +19,7 @@ jobs:
       with:
           image-ref: nginx
           format: 'table'
-      
+          output: 'trivyRes.html'
           exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
