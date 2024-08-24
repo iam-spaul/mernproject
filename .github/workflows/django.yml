@@ -1,0 +1,30 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: image pull from docker registry
+      run: |
+          docker pull sincha/todo:latest
+    - name: image scan using trivy
+      uses: aquasecurity/trivy-action@0.20.0
+      with:
+          image-ref: sincha/todo:latest
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
